@@ -10,7 +10,7 @@ public class StaticStrategy implements IStrategy {
         // Stratégie : On ne bouge pas horizontalement.
 
         // On force la vitesse X à 0 à chaque frame pour annuler toute inertie.
-        agent.setVelocityX(0);
+        agent.move(0,0);
 
         // Note Importante :
         // On ne touche PAS à velocityY.

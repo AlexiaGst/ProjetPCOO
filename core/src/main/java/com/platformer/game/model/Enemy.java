@@ -10,11 +10,25 @@ import java.util.HashMap;
 public class Enemy extends Agent implements IHostile {
     private IStrategy strategy;
     private float configuredSpeed;
+    private float spawnX;   // Point de départ pour la patrouille
+    private Agent target;   // La cible (le joueur)
+
+
     public Enemy(String textureKey, float x, float y, float width, float height, int hp, float speed, IStrategy strategy) {
         super(textureKey, x, y, width, height, hp);
         this.strategy = strategy;
         this.configuredSpeed = speed;
+        this.spawnX = x;
     }
+
+    // Setter pour lui dire qui chasser (appelé par LevelManager)
+    public void setTarget(Agent target) {
+        this.target = target;
+    }
+
+    // Getters pour la Stratégie
+    public Agent getTarget() { return target; }
+    public float getSpawnX() { return spawnX; }
 
     @Override
     public void update(float deltaTime) {

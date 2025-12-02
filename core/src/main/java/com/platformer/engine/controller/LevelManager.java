@@ -81,6 +81,26 @@ public class LevelManager implements Disposable {
         // 4. Charger les entités depuis la couche "Entities" de Tiled
         loadCollisions();
         loadEntities(factory);
+        linkEntities();
+    }
+
+    private void linkEntities() {
+        // 1. Trouver le joueur
+        Player player = null;
+        for (Entity e : entities) {
+            if (e instanceof Player) {
+                player = (Player) e;
+                break;
+            }
+        }
+        if (player == null) return;
+
+        // 2. Dire à tous les ennemis qui est le joueur
+        for (Entity e : entities) {
+            if (e instanceof com.platformer.game.model.Enemy) {
+                ((com.platformer.game.model.Enemy) e).setTarget(player);
+            }
+        }
     }
 
 
@@ -186,7 +206,7 @@ public class LevelManager implements Disposable {
 
             // Mise à jour de la physique et logique
             // Si c'est un AGENT, on délègue au spécialiste de la physique
-            if (e instanceof com.platformer.engine.model.Agent) {
+            if (e instanceof Agent) {
                 com.platformer.engine.model.Agent agent = (com.platformer.engine.model.Agent) e;
 
                 // C'est ici que tout se joue :

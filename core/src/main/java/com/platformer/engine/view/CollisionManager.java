@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.platformer.engine.model.Agent;
+import com.platformer.game.model.Player;
 
 public class CollisionManager {
 
@@ -39,8 +40,8 @@ public class CollisionManager {
 
         agent.getPolygonHitBox().translate(0, MARGIN); // On lève
 
-        for (Polygon wall : obstacles) {
-            if (Intersector.overlapConvexPolygons(agent.getPolygonHitBox(), wall)) {
+        for (Polygon o : obstacles) {
+            if (Intersector.overlapConvexPolygons(agent.getPolygonHitBox(), o)) {
                 // Rejet X
                 agent.setX(oldX);
                 agent.setVelocityX(0);
@@ -93,8 +94,8 @@ public class CollisionManager {
         // On descend la hitbox temporairement pour voir s'il y a du sol juste en dessous
         agent.getPolygonHitBox().translate(0, -MARGIN * 2);
 
-        for (Polygon ground : obstacles) {
-            if (Intersector.overlapConvexPolygons(agent.getPolygonHitBox(), ground)) {
+        for (Polygon o : obstacles) {
+            if (Intersector.overlapConvexPolygons(agent.getPolygonHitBox(), o)) {
                 // Si on touche quelque chose en ayant baissé la hitbox, c'est qu'on est au sol !
                 // (Condition : il faut ne pas être en train de monter)
                 if (agent.getVelocityY() <= 0) {
@@ -103,6 +104,7 @@ public class CollisionManager {
                 }
             }
         }
+
 
         // TRES IMPORTANT : On remet la hitbox à sa place normale
         agent.getPolygonHitBox().translate(0, MARGIN * 2);
